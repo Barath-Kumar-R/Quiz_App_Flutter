@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'quiz_brain.dart';
 
 Quizbrain quizbrain = Quizbrain();
@@ -33,7 +34,27 @@ class _QuizAppState extends State<QuizApp> {
   int qnumber = 0;
 
   void nextquestion() {
-    if (qnumber < quizbrain.questionbank.length - 1) {
+    if (qnumber > 12) {
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "ALERT",
+        desc: "The quiz is over",
+        buttons: [
+          DialogButton(
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+            child: const Text(
+              "RESTART",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ],
+      ).show();
+      qnumber = 0;
+      scorekeeper = [];
+    }
+    if (qnumber < quizbrain.questionbank.length) {
       qnumber++;
     }
   }
@@ -85,8 +106,8 @@ class _QuizAppState extends State<QuizApp> {
               onPressed: () {
                 setState(
                   () {
-                    checkanswer(true);
                     nextquestion();
+                    checkanswer(true);
                   },
                 );
               },
@@ -106,8 +127,8 @@ class _QuizAppState extends State<QuizApp> {
               onPressed: () {
                 setState(
                   () {
-                    checkanswer(false);
                     nextquestion();
+                    checkanswer(false);
                   },
                 );
               },
