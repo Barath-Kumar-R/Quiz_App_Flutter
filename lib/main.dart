@@ -34,7 +34,7 @@ class _QuizAppState extends State<QuizApp> {
   int qnumber = 0;
 
   void nextquestion() {
-    if (qnumber > 12) {
+    if (qnumber > 11) {
       Alert(
         context: context,
         type: AlertType.error,
@@ -53,22 +53,23 @@ class _QuizAppState extends State<QuizApp> {
       ).show();
       qnumber = 0;
       scorekeeper = [];
-    }
-    if (qnumber < quizbrain.questionbank.length) {
+    } else if (qnumber < quizbrain.questionbank.length) {
       qnumber++;
     }
   }
 
   void checkanswer(bool userpickedanswer) {
     bool correctanswer = quizbrain.questionbank[qnumber].questionAns;
-    if (correctanswer == userpickedanswer) {
+    if (correctanswer == userpickedanswer &&
+        qnumber < quizbrain.questionbank.length - 1) {
       scorekeeper.add(
         const Icon(
           Icons.check,
           color: Colors.green,
         ),
       );
-    } else {
+    } else if (correctanswer != userpickedanswer &&
+        qnumber < quizbrain.questionbank.length - 1) {
       scorekeeper.add(
         const Icon(
           Icons.close,
